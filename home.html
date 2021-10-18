@@ -24,10 +24,10 @@
             color: grey;
         }
         .divv{
-            width: 600px;
+            width: 900px;
         }
         .divv > img {
-            width: 600px;
+            width: 900px;
         }
     </style>
 </head>
@@ -36,7 +36,8 @@
     <div id="left">
       <ul>
           <li>Login</li>
-          <li><input type="text" placeholder="Search" id="ser"/></li>
+          <li><input type="text" placeholder="Search" id="ser"/>
+           <button onclick="searchS()">S</button></li>
           <li>Disrupt</li>
           <li>Startup</li>
           <li>Videos</li>
@@ -58,22 +59,37 @@
 <script>
 // https://newsapi.org/v2/everything?q=apple&from=2021-10-17&to=2021-10-17&sortBy=popularity&apiKey=2c3797d5f1134a6d8516325c2aec720f
   let home = document.getElementById("content");
-  let search = document.getElementById("ser").value;
+  
 
-     
+  async function searchS(){
 
+          let search = document.getElementById("ser").value;
 
+          let res = await fetch(`http://newsapi.org/v2/everything?q=${search}&from=2021-10-18&sortBy=popularity&apiKey=2c3797d5f1134a6d8516325c2aec720f`);
+          let data = await res.json();
+            console.log('data:', data)
+            searchPart(data.articles);
+  }
 
+  function searchPart(mn){
+      home.innerHTML = null;
+      mn.forEach((s) =>{
+        let div = document.createElement("div");
+        div.setAttribute("class","divv");
+        
+        let title = document.createElement("h1");
+        title.innerText =s.title;
 
+        let author = document.createElement("p");
+        author.innerText = s.author;
 
+        let img = document.createElement("img");
+        img.src = s.urlToImage;
 
-
-
-
-
-
-
-
+        div.append(title,author,img);
+        home.append(div);
+      });
+    }
   async function homecontent(detaiils){
           let res = await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=2c3797d5f1134a6d8516325c2aec720f`);
           let data = await res.json();
