@@ -11,12 +11,17 @@
         }
         #left {
             width: 200px;
+            position: relative;
         }
         input{
             width: 100px;
+            outline: none;
         }
         li{
             list-style: none;
+            line-height: 55px;
+            font-size: 20px;
+            color: grey;
         }
         .divv{
             width: 600px;
@@ -31,16 +36,16 @@
     <div id="left">
       <ul>
           <li>Login</li>
-          <li><input type="text" placeholder="Search"/></li>
+          <li><input type="text" placeholder="Search" id="ser"/></li>
           <li>Disrupt</li>
           <li>Startup</li>
           <li>Videos</li>
-          <li>videos</li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+          <li>Audios</li>
+          <li>Newslatters</li>
+          <li>TechCrunch+</li>
+          <li>Ec-1s</li>
+          <li>Advertise</li>
+          <li>More</li>
 
       </ul>
 
@@ -53,6 +58,21 @@
 <script>
 // https://newsapi.org/v2/everything?q=apple&from=2021-10-17&to=2021-10-17&sortBy=popularity&apiKey=2c3797d5f1134a6d8516325c2aec720f
   let home = document.getElementById("content");
+  let search = document.getElementById("ser").value;
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
 
   async function homecontent(detaiils){
           let res = await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=2c3797d5f1134a6d8516325c2aec720f`);
@@ -66,6 +86,10 @@
       det.forEach((s) =>{
         let div = document.createElement("div");
         div.setAttribute("class","divv");
+        div.addEventListener("click", () =>{
+            moredet(s);
+            // home.innerHTML = null;
+        })
         
         let title = document.createElement("h1");
         title.innerText = s.title;
@@ -81,6 +105,29 @@
       });
     }
     homecontent();
+
+    function moredet(s){
+        home.innerHTML = null;
+        let div = document.createElement("div");
+        div.setAttribute("class","divv");
+        
+        let title = document.createElement("h1");
+        title.innerText = s.title;
+
+        let author = document.createElement("p");
+        author.innerText = s.author;
+
+        let dis = document.createElement("p");
+        dis.innerText = s.description;
+
+        let img = document.createElement("img");
+        img.src = s.urlToImage;
+
+        div.append(title,author,dis,img);
+        home.append(div);
+
+
+    }
 
     
 </script>
