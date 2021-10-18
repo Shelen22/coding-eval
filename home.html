@@ -16,6 +16,7 @@
         input{
             width: 100px;
             outline: none;
+            font-size: 15px;
         }
         li{
             list-style: none;
@@ -29,6 +30,10 @@
         .divv > img {
             width: 900px;
         }
+       #right{
+           margin: 1%;
+           width: 300px;
+       }
     </style>
 </head>
 <body>
@@ -52,6 +57,7 @@
 
     </div>
     <div id="content"></div>
+    <div id="right"></div>
     </div>
 
 </body>
@@ -59,8 +65,7 @@
 <script>
 // https://newsapi.org/v2/everything?q=apple&from=2021-10-17&to=2021-10-17&sortBy=popularity&apiKey=2c3797d5f1134a6d8516325c2aec720f
   let home = document.getElementById("content");
-  
-
+  let right = document.getElementById("right");
   async function searchS(){
 
           let search = document.getElementById("ser").value;
@@ -135,6 +140,7 @@
 
         let dis = document.createElement("p");
         dis.innerText = s.description;
+        dis.style.fontSize = "20px";
 
         let img = document.createElement("img");
         img.src = s.urlToImage;
@@ -145,5 +151,33 @@
 
     }
 
+    async function rigthContent(detaiils){
+          let res = await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=2c3797d5f1134a6d8516325c2aec720f`);
+          let data = await res.json();
+            console.log('data:', data)
+            rightHead(data.articles);
+  }
+
+  function rightHead(detaa){
+    //   home.innerHTML = null;
+      detaa.forEach((v) =>{
+        let div = document.createElement("div");
+        div.setAttribute("class","divv2");
+        div.addEventListener("click", () =>{
+            moredet(v);
+            // home.innerHTML = null;
+        })
+        
+        let title = document.createElement("h3");
+        title.innerText = v.title;
+
+        let author = document.createElement("p");
+        author.innerText = v.author;
+
+        div.append(title,author);
+        right.append(div);
+      });
+    }
+      rigthContent();
     
 </script>
