@@ -6,17 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        #main{
+            display: flex;
+        }
         #left {
             width: 200px;
-            border: 1px solid black;
-
+        }
+        input{
+            width: 100px;
         }
         li{
             list-style: none;
         }
+        .divv{
+            width: 600px;
+        }
+        .divv > img {
+            width: 600px;
+        }
     </style>
 </head>
 <body>
+    <div id="main">
     <div id="left">
       <ul>
           <li>Login</li>
@@ -35,7 +46,8 @@
 
     </div>
     <div id="content"></div>
-    
+    </div>
+
 </body>
 </html>
 <script>
@@ -43,27 +55,23 @@
   let home = document.getElementById("content");
 
   async function homecontent(detaiils){
-      try{
-          let res = await fetch(`https://newsapi.org/v2/everything?q=apple&from=2021-10-17&to=2021-10-17&sortBy=popularity&apiKey=2c3797d5f1134a6d8516325c2aec720f`)
+          let res = await fetch(`https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=2c3797d5f1134a6d8516325c2aec720f`);
           let data = await res.json();
-            console.log('data:', data.articles)
+            console.log('data:', data)
             homePage(data.articles);
-      }
-      catch(e){
-          console.log('e:', e)
-      }
   }
 
   function homePage(det){
-      home.innerHTML = null;
+    //   home.innerHTML = null;
       det.forEach((s) =>{
         let div = document.createElement("div");
+        div.setAttribute("class","divv");
         
         let title = document.createElement("h1");
-        title.textContent = s.title;
+        title.innerText = s.title;
 
         let author = document.createElement("p");
-        author.textContent = s.author;
+        author.innerText = s.author;
 
         let img = document.createElement("img");
         img.src = s.urlToImage;
@@ -71,7 +79,8 @@
         div.append(title,author,img);
         home.append(div);
       });
-      
+    }
+    homecontent();
 
-  }
+    
 </script>
