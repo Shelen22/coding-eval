@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #left {
+            width: 200px;
+            border: 1px solid black;
+
+        }
+        li{
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="left">
+      <ul>
+          <li>Login</li>
+          <li><input type="text" placeholder="Search"/></li>
+          <li>Disrupt</li>
+          <li>Startup</li>
+          <li>Videos</li>
+          <li>videos</li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+
+      </ul>
+
+    </div>
+    <div id="content"></div>
+    
+</body>
+</html>
+<script>
+// https://newsapi.org/v2/everything?q=apple&from=2021-10-17&to=2021-10-17&sortBy=popularity&apiKey=2c3797d5f1134a6d8516325c2aec720f
+  let home = document.getElementById("content");
+
+  async function homecontent(detaiils){
+      try{
+          let res = await fetch(`https://newsapi.org/v2/everything?q=apple&from=2021-10-17&to=2021-10-17&sortBy=popularity&apiKey=2c3797d5f1134a6d8516325c2aec720f`)
+          let data = await res.json();
+            console.log('data:', data.articles)
+            homePage(data.articles);
+      }
+      catch(e){
+          console.log('e:', e)
+      }
+  }
+
+  function homePage(det){
+      home.innerHTML = null;
+      det.forEach((s) =>{
+        let div = document.createElement("div");
+        
+        let title = document.createElement("h1");
+        title.textContent = s.title;
+
+        let author = document.createElement("p");
+        author.textContent = s.author;
+
+        let img = document.createElement("img");
+        img.src = s.urlToImage;
+
+        div.append(title,author,img);
+        home.append(div);
+      });
+      
+
+  }
+</script>
